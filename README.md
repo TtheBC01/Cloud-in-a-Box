@@ -46,3 +46,10 @@ provided by a caddy server plugin.
 ```
 docker run -p 8888:8888 --rm --name browser-ide -d browser-ide
 ```
+
+### NOTE: Username and Password
+
+You should set the `AUTHP_ADMIN_USER` and `AUTHP_ADMIN_SECRET` environment 
+variables in the Dockerfile then rebuild your own image in order to properly
+setup the form-based login. I will eventually setup user registration so that the 
+pre-built docker image can be used in production without changing anything.
