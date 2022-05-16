@@ -1,3 +1,5 @@
+![Alt Text](/demo.gif)
+
 # Browser IDE
 
 This repo uses the open-source [Theia](https://theia-ide.org/) framework to build a browser-based IDE, similar to VSCode, that

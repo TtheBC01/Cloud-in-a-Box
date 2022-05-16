@@ -60,4 +60,4 @@ ENV AUTHP_ADMIN_SECRET adminpassword
 # RUN useradd -ms /bin/bash myuser
 # USER myuser
 
-ENTRYPOINT ["sh", "-c", "supervisord", "-c", "/etc/supervisord.conf"]
+ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor.conf"]
