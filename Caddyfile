@@ -1,9 +1,40 @@
-:8888 {
-    log
-	redir / /ui/
-
-	route /ui* {
-        uri strip_prefix /ui
-         reverse_proxy http://localhost:8080
+{
+  security {
+    local identity store localdb {
+      realm local
+      path {$HOME}/.local/caddy/users.json
     }
+
+    authentication portal myportal {
+      enable identity store localdb
+      ui {
+        theme basic
+        links {
+          "IDE" http://127.0.0.1:8888/ide/ icon "las la-star"
+        }
+      }
+    }
+
+    authorization policy admins_policy {
+      set auth url http://127.0.0.1:8888/ 
+      allow roles authp/admin authp/user
+      acl rule {
+        comment allow users
+        match role authp/user
+        allow stop log info
+      }
+    }
+  }
+}
+
+:8888 {
+  route {
+    authenticate with myportal
+  }
+
+  route /ide* {
+    authorize with admins_policy
+    uri strip_prefix /ide
+    reverse_proxy http://127.0.0.1:8080
+  }
 }

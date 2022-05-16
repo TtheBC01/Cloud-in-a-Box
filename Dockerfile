@@ -12,6 +12,7 @@ RUN apt update -y \
     && add-apt-repository -y ppa:deadsnakes/ppa \
 	&& apt update -y \
     && apt install -y vim \
+                   tmux \
                    git \
                    curl \
                    gcc \
@@ -48,10 +49,15 @@ ENV THEIA_MINI_BROWSER_HOST_PATTERN={{hostname}}
 ENV THEIA_WEBVIEW_EXTERNAL_ENDPOINT={{hostname}}
 ENV SHELL=/bin/bash \
     THEIA_DEFAULT_PLUGINS=local-dir:/.browser-ide/plugins
+    
+# Set some environment files for authentication
+# be sure to set these to something reasonble
+ENV AUTHP_ADMIN_USER admin
+ENV AUTHP_ADMIN_EMAIL admin@outlook.com
+ENV AUTHP_ADMIN_SECRET adminpassword
 
-# add a non-root user
+# add a non-root user if you want
 # RUN useradd -ms /bin/bash myuser
 # USER myuser
 
-ENTRYPOINT ["yarn", "start", "--hostname", "0.0.0.0", "--port", "8080"]
-#ENTRYPOINT ["sh", "-c", "supervisord", "-c", "/etc/supervisord.conf"]
+ENTRYPOINT ["sh", "-c", "supervisord", "-c", "/etc/supervisord.conf"]
