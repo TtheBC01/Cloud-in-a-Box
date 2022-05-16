@@ -1,3 +1,8 @@
+# See https://caddyserver.com/docs/ for info on Caddy Server
+FROM caddy:builder as caddy-build
+
+RUN xcaddy build --with github.com/greenpau/caddy-security
+
 FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -25,9 +30,28 @@ RUN apt update -y \
 
 RUN mkdir /.browser-ide
 WORKDIR /.browser-ide
-COPY . .
 
+# Build the IDE
+COPY package.json .
 RUN yarn
 RUN yarn build
 
+# Get the caddy server executable
+COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
+
+# Get auxiliary files for frontend server and process manager
+COPY supervisor.conf /etc/
+COPY Caddyfile /etc/
+
+# Set some environment variables for the IDE
+ENV THEIA_MINI_BROWSER_HOST_PATTERN={{hostname}}
+ENV THEIA_WEBVIEW_EXTERNAL_ENDPOINT={{hostname}}
+ENV SHELL=/bin/bash \
+    THEIA_DEFAULT_PLUGINS=local-dir:/.browser-ide/plugins
+
+# add a non-root user
+# RUN useradd -ms /bin/bash myuser
+# USER myuser
+
 ENTRYPOINT ["yarn", "start", "--hostname", "0.0.0.0", "--port", "8080"]
+#ENTRYPOINT ["sh", "-c", "supervisord", "-c", "/etc/supervisord.conf"]
