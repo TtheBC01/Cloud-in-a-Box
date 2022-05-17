@@ -14,7 +14,8 @@ automatic restarts of the caddy and node processes.
 
 ## Requirments
 
-Do build this project you need the [Docker Engine](https://docs.docker.com/get-docker/) available on your machine.
+1. [Docker Engine](https://docs.docker.com/engine/install/)
+2. [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Building
 
