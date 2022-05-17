@@ -1,8 +1,8 @@
 {
-    debug
+	debug
 	admin off
 	http_port 8888
-	
+
 	security {
 		local identity store localdb {
 			realm local
@@ -36,9 +36,9 @@
 }
 
 :8888 {
-	log 
+	log
 	route /auth* {
-	    trace tag="XYZ" response_debug=yes uri_filter="^/auth/login$"
+		trace tag="XYZ" response_debug=yes uri_filter="^/auth/login$"
 		authenticate with myportal
 	}
 
@@ -48,8 +48,8 @@
 		uri strip_prefix /ide
 		reverse_proxy http://127.0.0.1:8080
 	}
-	
+
 	route {
-	    redir https://{hostport}/auth/ 302
+		redir https://{hostport}/auth/ 302
 	}
 }
