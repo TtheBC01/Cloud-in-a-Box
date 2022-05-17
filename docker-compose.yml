@@ -1,0 +1,26 @@
+version: '3.3'
+services:
+    browser-ide:
+        container_name: browser-ide
+        volumes:
+            - 'browser-ide:/export'
+        ports:
+            - '8080:8080'
+            - '8888:8888'
+        image: 'tthebc01/browser-ide:latest'
+        networks: 
+            - browser-ide
+        
+    tunnel:
+        container_name: argo-tunnel
+        networks: 
+            - browser-ide
+        image: 'cloudflare/cloudflared'
+        command: tunnel --no-autoupdate --url http://browser-ide:8888
+
+volumes:
+  browser-ide:
+  
+networks:
+  browser-ide:
+    name: browser-ide
