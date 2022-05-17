@@ -71,7 +71,5 @@ pre-built docker image can be used in production without changing anything.
 
 ### TODO:
 
-1. Write a docker-compose file to bring up IDE stack with argo tunnel.
-2. Add docker cli utilities to the base image so docker engine can be used remotely.
-3. Figure out what is causing the user to have to provide credentials twice.
-4. Make the login form prettier
+1. Add docker cli utilities to the base image so docker engine can be used remotely.
+2. Make the login form prettier

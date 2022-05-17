@@ -1,7 +1,9 @@
 # See https://caddyserver.com/docs/ for info on Caddy Server
 FROM caddy:builder as caddy-build
 
-RUN xcaddy build --with github.com/greenpau/caddy-security
+RUN xcaddy build \
+    --with github.com/greenpau/caddy-security \
+    --with github.com/greenpau/caddy-trace
 
 FROM ubuntu:18.04
 
