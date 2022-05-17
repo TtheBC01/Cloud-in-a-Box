@@ -1,42 +1,44 @@
 {
-  security {
-    local identity store localdb {
-      realm local
-      path {$HOME}/.local/caddy/users.json
-    }
+	security {
+		local identity store localdb {
+			realm local
+			path {$HOME}/.local/caddy/users.json
+		}
 
-    authentication portal myportal {
-      enable identity store localdb
-      crypto default token lifetime 3600
-      ui {
-        theme basic
-        links {
-          "IDE" /ide/ icon "las la-star"
-        }
-      }
-    }
+		authentication portal myportal {
+			enable identity store localdb
+			crypto default token lifetime 3600
+			cookie domain /
+			ui {
+				theme basic
+				links {
+					"IDE" /ide/ icon "las la-star"
+					"My Identity" "/whoami" icon "las la-user"
+				}
+			}
+		}
 
-    authorization policy admins_policy {
-      set auth url / 
-      crypto default token lifetime 3600
-      allow roles authp/admin authp/user
-      acl rule {
-        comment allow users
-        match role authp/user
-        allow stop log info
-      }
-    }
-  }
+		authorization policy admins_policy {
+			set auth url /
+			crypto default token lifetime 3600
+			allow roles authp/admin authp/user
+			acl rule {
+				comment allow users
+				match role authp/user
+				allow stop log info
+			}
+		}
+	}
 }
 
 :8888 {
-  route {
-    authenticate with myportal
-  }
+	route {
+		authenticate with myportal
+	}
 
-  route /ide* {
-    authorize with admins_policy
-    uri strip_prefix /ide
-    reverse_proxy http://127.0.0.1:8080
-  }
+	route /ide* {
+		authorize with admins_policy
+		uri strip_prefix /ide
+		reverse_proxy http://127.0.0.1:8080
+	}
 }

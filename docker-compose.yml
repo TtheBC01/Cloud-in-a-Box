@@ -3,7 +3,7 @@ services:
     browser-ide:
         container_name: browser-ide
         volumes:
-            - 'browser-ide:/export'
+            - 'browser-ide:/root'
         ports:
             - '8080:8080'
             - '8888:8888'
@@ -16,7 +16,7 @@ services:
         networks: 
             - browser-ide
         image: 'cloudflare/cloudflared'
-        command: tunnel --no-autoupdate --url browser-ide:8888
+        command: tunnel --no-autoupdate --url http://browser-ide:8888
 
 volumes:
   browser-ide:
