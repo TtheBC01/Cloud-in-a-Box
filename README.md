@@ -46,6 +46,20 @@ provided by a caddy server plugin.
 ```
 docker run -p 8888:8888 --rm --name browser-ide -d browser-ide
 ```
+### Remote Access for the IDE
+
+Use the docker-compose file to spin up a 2-service stack consisting of the browser-ide container and a
+argo tunnel:
+
+```
+docker-compose up -d
+```
+
+The public URL for your IDE will be in the logs of the `argo-tunnel` container:
+
+```
+docker logs argo-tunnel
+```
 
 ### NOTE: Username and Password
 

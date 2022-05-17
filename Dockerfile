@@ -5,8 +5,10 @@ RUN xcaddy build --with github.com/greenpau/caddy-security
 
 FROM ubuntu:18.04
 
+# deadsnakes asks for your region, so we need to tell it to be non-interactive
 ENV DEBIAN_FRONTEND=noninteractive
 
+# install dependencies for Theia IDE
 RUN apt update -y \
     && apt install -y software-properties-common gpg \ 
     && add-apt-repository -y ppa:deadsnakes/ppa \
@@ -29,6 +31,7 @@ RUN apt update -y \
     && apt install -y nodejs \
     && npm install --global yarn
 
+# IDE will live in the .browser-ide directory
 RUN mkdir /.browser-ide
 WORKDIR /.browser-ide
 
@@ -37,10 +40,10 @@ COPY package.json .
 RUN yarn
 RUN yarn build
 
-# Get the caddy server executable
+# Get the caddy server executable with auth plugin enabled
 COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
 
-# Get auxiliary files for frontend server and process manager
+# Get auxiliary files for Caddy server and process manager
 COPY supervisor.conf /etc/
 COPY Caddyfile /etc/
 
