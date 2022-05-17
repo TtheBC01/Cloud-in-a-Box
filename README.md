@@ -49,7 +49,7 @@ docker run -p 8888:8888 --rm --name browser-ide -d browser-ide
 ```
 ### Remote Access for the IDE
 
-Use the docker-compose file to spin up a 2-service stack consisting of the browser-ide container and a
+Use the docker-compose file to spin up a 2-service stack consisting of the browser-ide container and an
 argo tunnel:
 
 ```
