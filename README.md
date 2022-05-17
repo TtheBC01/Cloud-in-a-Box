@@ -12,7 +12,7 @@ the browser ide uses [Caddy Server](https://caddyserver.com/) to provide form-ba
 from a public URL. Additionally, the project uses [supervisord](http://supervisord.org/) for process control and 
 automatic restarts of the caddy and node processes. 
 
-## Requirments
+## Requirements
 
 1. [Docker Engine](https://docs.docker.com/engine/install/)
 2. [Docker Compose](https://docs.docker.com/compose/install/)
@@ -65,7 +65,7 @@ docker logs argo-tunnel
 ### NOTE: Username and Password
 
 You should set the `AUTHP_ADMIN_USER` and `AUTHP_ADMIN_SECRET` environment 
-variables in the Dockerfile then rebuild your own image in order to properly
+variables in the Dockerfile then rebuild your own image to properly
 setup the form-based login. I will eventually setup user registration so that the 
 pre-built docker image can be used in production without changing anything.
 
