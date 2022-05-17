@@ -11,14 +11,14 @@
       ui {
         theme basic
         links {
-          "IDE" http://127.0.0.1:8888/ide/ icon "las la-star"
+          "IDE" /ide/ icon "las la-star"
         }
       }
     }
 
     authorization policy admins_policy {
-      set auth url http://127.0.0.1:8888/ 
-	  crypto default token lifetime 3600
+      set auth url / 
+      crypto default token lifetime 3600
       allow roles authp/admin authp/user
       acl rule {
         comment allow users

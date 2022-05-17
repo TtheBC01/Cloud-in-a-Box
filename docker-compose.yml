@@ -16,7 +16,7 @@ services:
         networks: 
             - browser-ide
         image: 'cloudflare/cloudflared'
-        command: tunnel --no-autoupdate --url http://browser-ide:8888
+        command: tunnel --no-autoupdate --url browser-ide:8888
 
 volumes:
   browser-ide:

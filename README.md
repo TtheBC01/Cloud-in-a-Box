@@ -53,3 +53,10 @@ You should set the `AUTHP_ADMIN_USER` and `AUTHP_ADMIN_SECRET` environment
 variables in the Dockerfile then rebuild your own image in order to properly
 setup the form-based login. I will eventually setup user registration so that the 
 pre-built docker image can be used in production without changing anything.
+
+### TODO:
+
+1. Write a docker-compose file to bring up IDE stack with argo tunnel.
+2. Add docker cli utilities to the base image so docker engine can be used remotely.
+3. Figure out what is causing the user to have to provide credentials twice.
+4. Make the login form prettier
