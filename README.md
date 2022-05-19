@@ -50,12 +50,13 @@ docker run -p 8888:8888 --rm --name browser-ide -d browser-ide
 ### Remote Access for the IDE
 
 This repository is setup to use Cloudflare Argo Tunnels as the introspective tunnel technology for 
-exposing the IDE to the wider internet. Anonymous tunnels are currently not supported as the `caddy-security`
-plugin authentication cookie is does not recognize the cookie domain properly, causing the form-based login
-page to fail. 
+exposing the IDE to the wider internet. Anonymous (non-authenticated) tunnels are currently not supported as 
+the `caddy-security` plugin authentication cookie does not recognize the auth cookie domain properly, causing 
+the form-based login page to fail. 
 
 First, you must have a domain name managed by Cloudflare. Second, you must have Argo Tunnels enabled for 
-the domain's account. Use the [Zero Trust dashboard](https://dash.teams.cloudflare.com/) to configure a new tunnel and configure your desired subdomain and service address. 
+the domain's account. Use the [Zero Trust dashboard](https://dash.teams.cloudflare.com/) to configure a new 
+tunnel and configure your desired subdomain and service address. 
 
 ![Alt Text](/tunnel-config.png)
 
