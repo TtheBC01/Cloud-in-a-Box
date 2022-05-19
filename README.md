@@ -49,18 +49,33 @@ docker run -p 8888:8888 --rm --name browser-ide -d browser-ide
 ```
 ### Remote Access for the IDE
 
-Use the docker-compose file to spin up a 2-service stack consisting of the browser-ide container and an
-argo tunnel:
+This repository is setup to use Cloudflare Argo Tunnels as the introspective tunnel technology for 
+exposing the IDE to the wider internet. Anonymous tunnels are currently not supported as the `caddy-security`
+plugin authentication cookie is does not recognize the cookie domain properly, causing the form-based login
+page to fail. 
+
+First, you must have a domain name managed by Cloudflare. Second, you must have Argo Tunnels enabled for 
+the domain's account. Use the [Zero Trust dashboard](https://dash.teams.cloudflare.com/) to configure a new tunnel and configure your desired subdomain and service address. 
+
+![Alt Text](/tunnel-config.png)
+
+When you create a new tunnel in the 
+dashboard, it will give you a tunnel token (a long string). Put the tunnel token in the `.env` file
+as the value saved in the `TUNNEL_TOKEN` environment variable. Now, use the docker-compose file to spin up 
+a 2-service stack consisting of the browser-ide container and a public Argo Tunnel:
 
 ```
 docker-compose up -d
 ```
 
-The public URL for your IDE will be in the logs of the `argo-tunnel` container:
+Check that your tunnel client is running nominally:
 
 ```
 docker logs argo-tunnel
 ```
+
+The URL for your tunnel will be the subdomain you chose for your parent domain managed by your Cloudflare
+account.
 
 ### NOTE: Username and Password
 

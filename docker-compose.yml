@@ -15,8 +15,8 @@ services:
         container_name: argo-tunnel
         networks: 
             - browser-ide
-        image: 'cloudflare/cloudflared'
-        command: tunnel --no-autoupdate --url http://browser-ide:8888
+        image: 'cloudflare/cloudflared:2022.5.1'
+        command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN} --url http://browser-ide:8888
 
 volumes:
   browser-ide:
