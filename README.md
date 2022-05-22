@@ -93,5 +93,4 @@ account.
 
 ### TODO:
 
-1. Add docker cli utilities to the base image so docker engine can be used remotely.
-2. Make the login form prettier
+1. Make the login form prettier
