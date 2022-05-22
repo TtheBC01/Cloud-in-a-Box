@@ -22,6 +22,7 @@ RUN apt update -y \
                    gcc \
                    g++ \ 
                    make \ 
+                   docker.io \
                    libsecret-1-dev \
                    libx11-dev \
                    libxkbfile-dev \
@@ -54,12 +55,6 @@ ENV THEIA_MINI_BROWSER_HOST_PATTERN={{hostname}}
 ENV THEIA_WEBVIEW_EXTERNAL_ENDPOINT={{hostname}}
 ENV SHELL=/bin/bash \
     THEIA_DEFAULT_PLUGINS=local-dir:/.browser-ide/plugins
-    
-# Set some environment files for authentication
-# be sure to set these to something reasonble
-ENV AUTHP_ADMIN_USER admin
-ENV AUTHP_ADMIN_EMAIL admin@outlook.com
-ENV AUTHP_ADMIN_SECRET adminpassword
 
 # add a non-root user if you want
 # RUN useradd -ms /bin/bash myuser
