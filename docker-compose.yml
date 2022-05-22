@@ -3,24 +3,29 @@ services:
     browser-ide:
         container_name: browser-ide
         volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
             - 'browser-ide:/root'
         ports:
             - '8080:8080'
             - '8888:8888'
         image: 'tthebc01/browser-ide:latest'
         networks: 
-            - browser-ide
+            - proxy-network
+        environment:
+            - AUTHP_ADMIN_USER=${AUTHP_ADMIN_USER}
+            - AUTHP_ADMIN_SECRET=${AUTHP_ADMIN_SECRET}
+            - AUTHP_ADMIN_EMAIL=${AUTHP_ADMIN_EMAIL}
         
     tunnel:
         container_name: argo-tunnel
-        networks: 
-            - browser-ide
         image: 'cloudflare/cloudflared:2022.5.1'
-        command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN} --url http://browser-ide:8888
+        command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN}
+        networks: 
+            - proxy-network
 
 volumes:
   browser-ide:
   
 networks:
-  browser-ide:
-    name: browser-ide
+  proxy-network:
+    name: proxy-network

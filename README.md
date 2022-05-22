@@ -47,6 +47,19 @@ provided by a caddy server plugin.
 ```
 docker run -p 8888:8888 --rm --name browser-ide -d browser-ide
 ```
+
+### NOTE: Username and Password
+
+You should set the `AUTHP_ADMIN_USER` and `AUTHP_ADMIN_SECRET` environment variables in the `.env` file to 
+appropriate values to properly setup the form-based login. I will eventually setup user registration so that 
+the pre-built docker image can be used in production without changing anything.
+
+### Docker in Docker
+
+The browser-ide image includes the `docker.io` package so that the host's docker socket (which is mounted as a volume in 
+the [`docker-compose.yml`](/docker-compose.yml#L6) file) can be manipulated as if the user was logged into the host machine. 
+If you do not require this functionality, you may consider removing the socket mount from this file. 
+
 ### Remote Access for the IDE
 
 This repository is setup to use Cloudflare Argo Tunnels as the introspective tunnel technology for 
@@ -62,7 +75,7 @@ tunnel and configure your desired subdomain and service address.
 
 When you create a new tunnel in the 
 dashboard, it will give you a tunnel token (a long string). Put the tunnel token in the `.env` file
-as the value saved in the `TUNNEL_TOKEN` environment variable. Now, use the docker-compose file to spin up 
+as the value saved in the `TUNNEL_TOKEN` environment variable. Now, use the `docker-compose.yml` file to spin up 
 a 2-service stack consisting of the browser-ide container and a public Argo Tunnel:
 
 ```
@@ -77,13 +90,6 @@ docker logs argo-tunnel
 
 The URL for your tunnel will be the subdomain you chose for your parent domain managed by your Cloudflare
 account.
-
-### NOTE: Username and Password
-
-You should set the `AUTHP_ADMIN_USER` and `AUTHP_ADMIN_SECRET` environment 
-variables in the Dockerfile then rebuild your own image to properly
-setup the form-based login. I will eventually setup user registration so that the 
-pre-built docker image can be used in production without changing anything.
 
 ### TODO:
 
