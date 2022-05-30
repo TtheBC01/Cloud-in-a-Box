@@ -1,6 +1,7 @@
 version: '3.3'
 services:
     browser-ide:
+        restart: always
         container_name: browser-ide
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
@@ -15,8 +16,37 @@ services:
             - AUTHP_ADMIN_USER=${AUTHP_ADMIN_USER}
             - AUTHP_ADMIN_SECRET=${AUTHP_ADMIN_SECRET}
             - AUTHP_ADMIN_EMAIL=${AUTHP_ADMIN_EMAIL}
+            
+    ipfs-node:
+        restart: always
+        container_name: ipfs_node
+        volumes:
+            - 'ipfs_staging:/export'
+            - 'ipfs_data:/data/ipfs'
+        ports:
+            - '4001:4001'
+            - '4001:4001/udp'
+            - '127.0.0.1:5001:5001'
+        image: 'ipfs/go-ipfs:latest'
+        networks: 
+            - proxy-network
+            
+    glances:
+        restart: always
+        container_name: glances
+        image: 'nicolargo/glances:latest-full'
+        ports:
+            - "61208:61208"
+        environment:
+            GLANCES_OPT: "-w"
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock:ro"
+        pid: "host"
+        networks: 
+            - proxy-network
         
     tunnel:
+        restart: always
         container_name: argo-tunnel
         image: 'cloudflare/cloudflared:2022.5.1'
         command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN}
@@ -25,6 +55,8 @@ services:
 
 volumes:
   browser-ide:
+  ipfs_staging:
+  ipfs_data:
   
 networks:
   proxy-network:

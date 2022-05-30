@@ -1,16 +1,20 @@
 ![Alt Text](/demo.gif)
 
-# Browser IDE
+# Cloud-in-a-Box
 
-This repo uses the open-source [Theia](https://theia-ide.org/) framework to build a browser-based IDE, similar to VSCode, that
+This repo implements a docker stack that can act as your own personal micro-cloud setup. The stack uses the 
+open-source [Theia](https://theia-ide.org/) framework to build a browser-based IDE, similar to VSCode, that
 can be served from Docker container and used as an alternative to traditional RDP tools, particularly 
 when coupled with an [authentication layer](https://github.com/greenpau/caddy-security) and an 
-[introspective tunnel](https://www.cloudflare.com/products/tunnel/) technology. 
+[introspective tunnel](https://www.cloudflare.com/products/tunnel/) technology. Additionally, the opensource
+[glances](https://nicolargo.github.io/glances/) monitoring tool is used to provide insights into how your
+machine is performing. Lastly, an [IPFS](https://ipfs.io/) node is provided for content delivery and basic 
+object storage functionality. 
 
-This repo is intended to be self-contained in that a developer should be able to use it as a stand-alone tool. To that end,
-the browser ide uses [Caddy Server](https://caddyserver.com/) to provide form-based authentication when accessing the ide 
-from a public URL. Additionally, the project uses [supervisord](http://supervisord.org/) for process control and 
-automatic restarts of the caddy and node processes. 
+This repo is intended to be self-contained in that a developer should be able to use it as a stand-alone tool. To that end, Cloud-in-a-Box uses [Caddy Server](https://caddyserver.com/) to provide form-based 
+authentication when accessing service endpoints from a public URL. Additionally, the project uses 
+[supervisord](http://supervisord.org/) for process control and automatic restarts of the caddy and node 
+processes. 
 
 ## Requirements
 
