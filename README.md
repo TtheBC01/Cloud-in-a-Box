@@ -104,3 +104,5 @@ account.
 ### TODO:
 
 1. Make the login form prettier
+2. Add GPU support
+3. Add Prometheus/Grafana monitoring for Caddy
