@@ -64,6 +64,12 @@ The browser-ide image includes the `docker.io` package so that the host's docker
 the [`docker-compose.yml`](/docker-compose.yml#L6) file) can be manipulated as if the user was logged into the host machine. 
 If you do not require this functionality, you may consider removing the socket mount from this file. 
 
+Attach to another container in the host like this:
+
+```shell
+docker exec -ti <container name> /bin/bash
+```
+
 ### Remote Access for the IDE
 
 This repository is setup to use Cloudflare Argo Tunnels as the introspective tunnel technology for 
