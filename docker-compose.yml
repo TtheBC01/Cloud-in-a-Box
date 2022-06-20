@@ -4,12 +4,14 @@ services:
         restart: always
         container_name: browser-ide
         volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
+            - '/var/run/docker.sock:/var/run/docker.sock'
             - 'browser-ide:/root'
-        ports:
-            - '8080:8080'
-            - '8888:8888'
+            - "./browser-ide/Caddyfile:/etc/Caddyfile"
+            - "./browser-ide/supervisor.conf:/etc/supervisor.conf"
         image: 'tthebc01/browser-ide:latest'
+        expose:
+            - "8080"
+            - "8888"
         networks: 
             - proxy-network
         environment:
@@ -21,13 +23,28 @@ services:
         restart: always
         container_name: ipfs_node
         volumes:
-            - 'ipfs_staging:/export'
-            - 'ipfs_data:/data/ipfs'
-        ports:
-            - '4001:4001'
-            - '4001:4001/udp'
-            - '127.0.0.1:5001:5001'
+            - 'ipfs-staging:/export'
+            - 'ipfs-data:/data/ipfs'
+        expose:
+            - '4001'
+            - '4001/udp'
+            - '5001'
         image: 'ipfs/go-ipfs:latest'
+        networks: 
+            - proxy-network
+            
+    glances-export:
+        restart: always
+        container_name: glances-export
+        image: 'nicolargo/glances:latest-full'
+        expose:
+            - "9091"
+        environment:
+            GLANCES_OPT: "--export prometheus --quiet"
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock:ro"
+            - "./glances/glances.conf:/glances/conf/glances.conf"
+        pid: "host"
         networks: 
             - proxy-network
             
@@ -35,13 +52,64 @@ services:
         restart: always
         container_name: glances
         image: 'nicolargo/glances:latest-full'
-        ports:
-            - "61208:61208"
+        expose:
+            - "61208"
         environment:
             GLANCES_OPT: "-w"
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock:ro"
         pid: "host"
+        networks: 
+            - proxy-network
+            
+    prometheus:
+        image: prom/prometheus:latest
+        container_name: prometheus
+        command:
+            - --config.file=/etc/prometheus/prometheus.yml
+        volumes:
+            - "./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro"
+            - 'prometheus-data:/prometheus'
+        expose:
+            - "9090"
+        depends_on:
+            - cadvisor
+            - browser-ide
+        networks: 
+            - proxy-network
+            
+    cadvisor:
+        image: gcr.io/cadvisor/cadvisor:latest
+        container_name: cadvisor
+        volumes:
+            - /:/rootfs:ro
+            - /var/run:/var/run:rw
+            - /sys:/sys:ro
+            - /var/lib/docker/:/var/lib/docker:ro
+        ports:
+            - "8080:8080"
+        depends_on:
+            - browser-ide
+            - tunnel
+            - ipfs-node
+        networks: 
+            - proxy-network
+        command: 
+            - '-url_base_prefix=/cadvisor'
+            
+    grafana:
+        image: grafana/grafana-enterprise
+        container_name: grafana
+        volumes:
+            - grafana-storage:/var/lib/grafana
+            - "./grafana/grafana.ini:/etc/grafana/grafana.ini"
+            - "./grafana/cloud-in-a-box-grafana.yaml:/etc/grafana/provisioning/dashboards/cloud-in-a-box-grafana.yaml"
+            - "./grafana/dashboards:/etc/grafana/dashboards"
+            - "./grafana/prom-data-source.yaml:/etc/grafana/provisioning/datasources/prom-data-source.yaml"
+        ports:
+            - "3000:3000"
+        depends_on:
+            - prometheus
         networks: 
             - proxy-network
         
@@ -52,11 +120,15 @@ services:
         command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN}
         networks: 
             - proxy-network
+        depends_on:
+            - browser-ide
 
 volumes:
   browser-ide:
-  ipfs_staging:
-  ipfs_data:
+  ipfs-staging:
+  ipfs-data:
+  prometheus-data:
+  grafana-storage:
   
 networks:
   proxy-network:

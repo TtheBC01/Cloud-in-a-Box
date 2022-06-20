@@ -47,8 +47,8 @@ RUN yarn build
 COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
 
 # Get auxiliary files for Caddy server and process manager
-COPY supervisor.conf /etc/
-COPY Caddyfile /etc/
+COPY ./browser-ide/supervisor.conf /etc/
+COPY ./browser-ide/Caddyfile /etc/
 
 # Set some environment variables for the IDE
 ENV THEIA_MINI_BROWSER_HOST_PATTERN={{hostname}}
