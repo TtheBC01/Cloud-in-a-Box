@@ -2,19 +2,24 @@
 
 # Cloud-in-a-Box
 
-This repo implements a docker stack that can act as your own personal micro-cloud setup. The stack uses the 
-open-source [Theia](https://theia-ide.org/) framework to build a browser-based IDE, similar to VSCode, that
-can be served from Docker container and used as an alternative to traditional RDP tools, particularly 
-when coupled with an [authentication layer](https://github.com/greenpau/caddy-security) and an 
-[introspective tunnel](https://www.cloudflare.com/products/tunnel/) technology. Additionally, the opensource
-[glances](https://nicolargo.github.io/glances/) monitoring tool is used to provide insights into how your
-machine is performing. Lastly, an [IPFS](https://ipfs.io/) node is provided for content delivery and basic 
-object storage functionality. 
+This repo implements a docker stack that can act as your own personal, lightweight, micro-cloud setup. The 
+stack uses the open-source [Theia](https://theia-ide.org/) framework to build a browser-based IDE, similar 
+to VSCode, that is served from Docker container. An [authentication layer](https://github.com/greenpau/caddy-security) 
+is provided by Caddy and public hosting is handled by [Argo Tunnel](https://www.cloudflare.com/products/tunnel/).
+Additionally, the IDE and caddy processes are handled by [supervisord](http://supervisord.org/) for process control 
+and automatic restarts. 
 
-This repo is intended to be self-contained in that a developer should be able to use it as a stand-alone tool. To that end, Cloud-in-a-Box uses [Caddy Server](https://caddyserver.com/) to provide form-based 
-authentication when accessing service endpoints from a public URL. Additionally, the project uses 
-[supervisord](http://supervisord.org/) for process control and automatic restarts of the caddy and node 
-processes. 
+Several services are created for monitoring:
+- [glances](https://nicolargo.github.io/glances/) is used for host resource monitoring
+- [cAdvisor](https://github.com/google/cadvisor) provides detailed container metrics
+- [Prometheus](https://prometheus.io/) stores time series data collected from glances and cAdvisor
+- [Grafana]() dashboards are provisioned for visualization of host resource utilization and Caddy Server load
+
+Lastly, an [IPFS](https://ipfs.io/) node is provided for content delivery and basic object storage functionality. 
+
+This repo is intended to be self-contained in that a developer should be able to use it as a stand-alone tool. However,
+I can also serve as a template project for specialized projects like Web 3.0 infrastructure hosting or remote access
+for machine learning rigs. 
 
 ## Requirements
 
@@ -37,59 +42,38 @@ A pre-built version of the browser-ide can be pulled from Docker Hub:
 docker pull tthebc01/browser-ide
 ```
 
-## Running the IDE
+## Running the Stack
 
-Once you have either built or pulled the ide container, you can run it locally by exposing port `8080` on the ide container:
+Important environment variables are configured in the [`.env`](.env) file. 
 
-```
-docker run -p 8080:8080 --rm --name browser-ide -d browser-ide
-```
-
-To enable authentication, you'll need to expose port `8888` which is a reverse-proxy endpoint with authentication
-provided by a caddy server plugin.
-
-```
-docker run -p 8888:8888 --rm --name browser-ide -d browser-ide
-```
-
-### NOTE: Username and Password
+### Step 1: Username and Password
 
 You should set the `AUTHP_ADMIN_USER` and `AUTHP_ADMIN_SECRET` environment variables in the `.env` file to 
 appropriate values to properly setup the form-based login. I will eventually setup user registration so that 
-the pre-built docker image can be used in production without changing anything.
+the pre-built docker image can be used in production without changing anything. 
 
-### Docker in Docker
+### Step 2: Get an Argo Tunnel Token
 
-The browser-ide image includes the `docker.io` package so that the host's docker socket (which is mounted as a volume in 
-the [`docker-compose.yml`](/docker-compose.yml#L6) file) can be manipulated as if the user was logged into the host machine. 
-If you do not require this functionality, you may consider removing the socket mount from this file. 
+This repository is setup to use Cloudflare Argo Tunnels as the introspective tunnel technology for exposing the 
+IDE to the wider internet. This could be replaced with something like [NGrok](https://ngrok.com/). Anonymous 
+(non-authenticated) tunnels can be supported by tweaking the [Caddyfile](/browser-ide/Caddyfile) appropriatly. 
 
-Attach to another container in the host like this:
-
-```shell
-docker exec -ti <container name> /bin/bash
-```
-
-### Remote Access for the IDE
-
-This repository is setup to use Cloudflare Argo Tunnels as the introspective tunnel technology for 
-exposing the IDE to the wider internet. Anonymous (non-authenticated) tunnels are currently not supported as 
-the `caddy-security` plugin authentication cookie does not recognize the auth cookie domain properly, causing 
-the form-based login page to fail. 
-
-First, you must have a domain name managed by Cloudflare. Second, you must have Argo Tunnels enabled for 
+You must have a domain name managed by Cloudflare. Second, you must have Argo Tunnels enabled for 
 the domain's account. Use the [Zero Trust dashboard](https://dash.teams.cloudflare.com/) to configure a new 
 tunnel and configure your desired subdomain and service address. 
 
 ![Alt Text](/tunnel-config.png)
 
-When you create a new tunnel in the 
-dashboard, it will give you a tunnel token (a long string). Put the tunnel token in the `.env` file
-as the value saved in the `TUNNEL_TOKEN` environment variable. Now, use the `docker-compose.yml` file to spin up 
-a 2-service stack consisting of the browser-ide container and a public Argo Tunnel:
+When you create a new tunnel in the dashboard, it will give you a tunnel token (a long string). Put the tunnel 
+token in the `.env` file as the value saved in the `TUNNEL_TOKEN` environment variable.
+
+### Step 3: Docker Compose
+
+Now, use the `docker-compose.yml` file to spin up a stack consisting of the browser-ide container, an Argo Tunnel
+instance, and servical monitoring services:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 Check that your tunnel client is running nominally:
@@ -101,8 +85,37 @@ docker logs argo-tunnel
 The URL for your tunnel will be the subdomain you chose for your parent domain managed by your Cloudflare
 account.
 
-### TODO:
+## Docker in Docker
 
-1. Make the login form prettier
+The browser-ide image includes the `docker.io` package so that the host's docker socket (which is mounted as a volume in 
+the [`docker-compose.yml`](/docker-compose.yml#L6) file) can be manipulated as if the user was logged into the host machine. 
+If you do not require this functionality, you may consider removing the socket mount from this file. 
+
+## Configuring IPFS WebUI
+
+To get the IPFS Web UI to work properly, you'll need to follow the directions on the startup page the first time you visit it.
+It will ask you to run the following two commands in the IPFS container (with `example.com` replaced with your public URL):
+
+```shell
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["https://example.com", "http://localhost:3000", "http://127.0.0.1:5001", "https://webui.ipfs.io"]'
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "POST"]'
+```
+
+To do this, open a terminal in the IDE and start an interactive session in the IPFS service container:
+
+```shell
+docker exec -ti ipfs_node /bin/sh
+```
+
+Once in the interactive shell, run the two commands from above. Now you must restart the IPFS service by running the following command
+in a new terminal:
+
+```shell
+docker restart ipfs_node
+```
+
+## TODO:
+
+1. Add alerts for Slack
 2. Add GPU support
-3. Add Prometheus/Grafana monitoring for Caddy
+3. Make the login form prettier
