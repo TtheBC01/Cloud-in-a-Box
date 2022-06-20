@@ -42,10 +42,7 @@
   "liveNow": false,
   "panels": [
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "6QmkMMqnk"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -117,10 +114,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "6QmkMMqnk"
-          },
+          "datasource": "Prometheus",
           "editorMode": "builder",
           "expr": "glances_mem_percent{instance=\"glances-export:9091\"}",
           "legendFormat": "__auto",
@@ -132,10 +126,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "6QmkMMqnk"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -207,10 +198,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "6QmkMMqnk"
-          },
+          "datasource": "Prometheus",
           "editorMode": "builder",
           "expr": "glances_cpu_system{instance=\"glances-export:9091\"}",
           "legendFormat": "__auto",
@@ -222,10 +210,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "6QmkMMqnk"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -296,10 +281,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "6QmkMMqnk"
-          },
+          "datasource": "Prometheus",
           "editorMode": "builder",
           "expr": "glances_docker_glances_network_rx{instance=\"glances-export:9091\"}",
           "legendFormat": "__auto",
@@ -307,10 +289,7 @@
           "refId": "A"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "6QmkMMqnk"
-          },
+          "datasource": "Prometheus",
           "editorMode": "builder",
           "expr": "glances_docker_glances_network_tx{instance=\"glances-export:9091\"}",
           "hide": false,
@@ -323,10 +302,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "6QmkMMqnk"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -398,10 +374,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "6QmkMMqnk"
-          },
+          "datasource": "Prometheus",
           "editorMode": "builder",
           "expr": "glances_fs__etc_hostname_percent{instance=\"glances-export:9091\"}",
           "legendFormat": "__auto",

@@ -75,6 +75,7 @@ services:
         depends_on:
             - cadvisor
             - browser-ide
+            - glances
         networks: 
             - proxy-network
             

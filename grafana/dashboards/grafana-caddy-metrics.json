@@ -29,10 +29,7 @@
   "liveNow": false,
   "panels": [
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "6QmkMMqnk"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -103,10 +100,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "6QmkMMqnk"
-          },
+          "datasource": "Prometheus",
           "editorMode": "builder",
           "expr": "rate(caddy_http_response_size_bytes_bucket{instance=\"browser-ide:2222\", code=\"200\", handler=\"reverse_proxy\"}[$__rate_interval])",
           "legendFormat": "__auto",
@@ -118,10 +112,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "6QmkMMqnk"
-      },
+      "datasource": "Prometheus",
       "description": "Avg HTTP requests per minute on all reverse proxy routes.",
       "fieldConfig": {
         "defaults": {
@@ -193,10 +184,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "6QmkMMqnk"
-          },
+          "datasource": "Prometheus",
           "editorMode": "builder",
           "expr": "rate(caddy_http_requests_total{instance=\"browser-ide:2222\", handler=\"reverse_proxy\"}[1m])",
           "legendFormat": "__auto",
@@ -208,10 +196,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "6QmkMMqnk"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -283,10 +268,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "6QmkMMqnk"
-          },
+          "datasource": "Prometheus",
           "editorMode": "builder",
           "expr": "rate(caddy_http_request_duration_seconds_sum{instance=\"browser-ide:2222\", code=\"200\", handler=\"reverse_proxy\"}[$__rate_interval])",
           "legendFormat": "__auto",
@@ -298,10 +280,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "6QmkMMqnk"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -398,10 +377,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "6QmkMMqnk"
-          },
+          "datasource": "Prometheus",
           "editorMode": "builder",
           "expr": "caddy_http_request_errors_total{instance=\"browser-ide:2222\"}",
           "legendFormat": "__auto",

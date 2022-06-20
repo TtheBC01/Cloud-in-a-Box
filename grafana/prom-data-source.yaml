@@ -14,8 +14,8 @@ datasources:
     orgId: 1
     # <string> url
     url: http://prometheus:9090
-	# <bool> mark as default datasource. Max one per org
-	isDefault: true
-	# <bool> allow users to edit datasources from the UI.
+    # <bool> mark as default datasource. Max one per org
+    isDefault: true
+    # <bool> allow users to edit datasources from the UI.
     editable: true
-	version: 1
+    version: 1
