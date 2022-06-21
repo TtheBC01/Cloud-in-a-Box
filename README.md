@@ -15,10 +15,10 @@ Several services are created for monitoring:
 - [Prometheus](https://prometheus.io/) stores time series data collected from glances and cAdvisor
 - [Grafana]() dashboards are provisioned for visualization of host resource utilization and Caddy Server load
 
-Lastly, an [IPFS](https://ipfs.io/) node is provided for content delivery and basic object storage functionality. 
+Lastly, an [IPFS](https://ipfs.io/) node is included for content delivery and basic object storage functionality. 
 
 This repo is intended to be self-contained in that a developer should be able to use it as a stand-alone tool. However,
-it can also serve as a template project for specialized projects like Web 3.0 infrastructure hosting or remote access
+it can also serve as a template project for specialized applications like Web 3.0 infrastructure hosting or remote access
 for machine learning rigs. 
 
 ## Requirements
@@ -56,7 +56,7 @@ the pre-built docker image can be used in production without changing anything.
 
 This repository is setup to use Cloudflare Argo Tunnels as the introspective tunnel technology for exposing the 
 IDE to the wider internet. This could be replaced with something like [NGrok](https://ngrok.com/). Anonymous 
-(non-authenticated) tunnels can be supported by tweaking the [Caddyfile](/browser-ide/Caddyfile) appropriatly. 
+(non-authenticated) tunnels can be supported by tweaking the [Caddyfile](/browser-ide/Caddyfile) appropriately. 
 
 You must have a domain name managed by Cloudflare. Second, you must have Argo Tunnels enabled for 
 the domain's account. Use the [Zero Trust dashboard](https://dash.teams.cloudflare.com/) to configure a new 
@@ -70,7 +70,7 @@ token in the `.env` file as the value saved in the `TUNNEL_TOKEN` environment va
 ### Step 3: Docker Compose
 
 Now, use the `docker-compose.yml` file to spin up a stack consisting of the browser-ide container, an Argo Tunnel
-instance, and servical monitoring services:
+instance, and several monitoring services:
 
 ```
 docker compose up -d
