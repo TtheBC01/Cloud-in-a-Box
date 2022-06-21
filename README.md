@@ -18,7 +18,7 @@ Several services are created for monitoring:
 Lastly, an [IPFS](https://ipfs.io/) node is provided for content delivery and basic object storage functionality. 
 
 This repo is intended to be self-contained in that a developer should be able to use it as a stand-alone tool. However,
-I can also serve as a template project for specialized projects like Web 3.0 infrastructure hosting or remote access
+it can also serve as a template project for specialized projects like Web 3.0 infrastructure hosting or remote access
 for machine learning rigs. 
 
 ## Requirements
@@ -93,8 +93,9 @@ If you do not require this functionality, you may consider removing the socket m
 
 ## Configuring IPFS WebUI
 
-To get the IPFS Web UI to work properly, you'll need to follow the directions on the startup page the first time you visit it.
-It will ask you to run the following two commands in the IPFS container (with `example.com` replaced with your public URL):
+To get the IPFS Web UI to work properly, you'll need to follow the directions on the startup page the first time you click on the 
+IPFS service in the auth portal. It will ask you to run the following two commands in the IPFS container (with `example.com` 
+replaced with your public URL):
 
 ```shell
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["https://example.com", "http://localhost:3000", "http://127.0.0.1:5001", "https://webui.ipfs.io"]'
