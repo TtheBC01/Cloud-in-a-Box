@@ -1,53 +1,65 @@
 {
   "private": true,
-    "dependencies": {
-        "@theia/callhierarchy": "latest",
-        "@theia/console": "latest",
-        "@theia/core": "latest",
-        "@theia/debug": "latest",
-        "@theia/editor": "latest",
-        "@theia/editor-preview": "latest",
-        "@theia/file-search": "latest",
-        "@theia/filesystem": "latest",
-        "@theia/getting-started": "latest",
-        "@theia/keymaps": "latest",
-        "@theia/markers": "latest",
-        "@theia/messages": "latest",
-        "@theia/metrics": "latest",
-        "@theia/monaco": "latest",
-        "@theia/navigator": "latest",
-        "@theia/outline-view": "latest",
-        "@theia/output": "latest",
-        "@theia/plugin": "latest",
-        "@theia/plugin-ext": "latest",
-        "@theia/plugin-ext-vscode": "latest",
-        "@theia/preferences": "latest",
-        "@theia/process": "latest",
-        "@theia/scm": "latest",
-        "@theia/search-in-workspace": "latest",
-        "@theia/task": "latest",
-        "@theia/terminal": "latest",
-        "@theia/typehierarchy": "latest",
-        "@theia/userstorage": "latest",
-        "@theia/variable-resolver": "latest",
-        "@theia/vsx-registry": "latest",
-        "@theia/workspace": "latest"
+  "dependencies": {
+    "@theia/callhierarchy": "latest",
+    "@theia/console": "latest",
+    "@theia/core": "latest",
+    "@theia/debug": "latest",
+    "@theia/editor": "latest",
+    "@theia/editor-preview": "latest",
+    "@theia/file-search": "latest",
+    "@theia/filesystem": "latest",
+    "@theia/getting-started": "latest",
+    "@theia/keymaps": "latest",
+    "@theia/markers": "latest",
+    "@theia/messages": "latest",
+    "@theia/metrics": "latest",
+    "@theia/monaco": "latest",
+    "@theia/navigator": "latest",
+    "@theia/outline-view": "latest",
+    "@theia/output": "latest",
+    "@theia/plugin": "latest",
+    "@theia/plugin-ext": "latest",
+    "@theia/plugin-ext-vscode": "latest",
+    "@theia/preferences": "latest",
+    "@theia/process": "latest",
+    "@theia/scm": "latest",
+    "@theia/search-in-workspace": "latest",
+    "@theia/task": "latest",
+    "@theia/terminal": "latest",
+    "@theia/typehierarchy": "latest",
+    "@theia/userstorage": "latest",
+    "@theia/variable-resolver": "latest",
+    "@theia/vsx-registry": "latest",
+    "@theia/workspace": "latest"
+  },
+  "devDependencies": {
+    "@theia/cli": "latest"
+  },
+  "theia": {
+    "frontend": {
+      "config": {
+        "applicationName": "Cloud-in-a-Box IDE"
+      }
     },
-    "devDependencies": {
-        "@theia/cli": "latest"
-    },
+    "generator": {
+      "config": {
+        "preloadTemplate": "./preloadTemplate.html"
+      }
+    }
+  },
   "scripts": {
     "prepare": "yarn run clean && yarn build && yarn run download:plugins",
     "clean": "theia clean",
-    "build": "theia build --mode development",
+    "build": "theia build",
     "start": "theia start --plugins=local-dir:plugins",
     "download:plugins": "theia download:plugins"
   },
   "theiaPluginsDir": "plugins",
   "theiaPlugins": {
-    "vscode-builtin-extensions-pack": "https://open-vsx.org/api/eclipse-theia/builtin-extension-pack/1.50.1/file/eclipse-theia.builtin-extension-pack-1.50.1.vsix",
-	"vscode.git": "https://open-vsx.org/api/vscode/git/1.52.1/file/vscode.git-1.52.1.vsix",
-    "vscode.markdown-language-features": "https://open-vsx.org/api/vscode/markdown-language-features/1.39.2/file/vscode.markdown-language-features-1.39.2.vsix",
+    "vscode-builtin-extensions-pack": "https://open-vsx.org/api/eclipse-theia/builtin-extension-pack/1.62.3/file/eclipse-theia.builtin-extension-pack-1.62.3.vsix",
+    "vscode.git": "https://open-vsx.org/api/vscode/git/1.62.3/file/vscode.git-1.62.3.vsix",
+    "vscode.markdown-language-features": "https://open-vsx.org/api/vscode/markdown-language-features/1.62.3/file/vscode.markdown-language-features-1.62.3.vsix",
     "vscode.editorconfig": "https://github.com/theia-ide/editorconfig-vscode/releases/download/v0.14.4/EditorConfig-0.14.4.vsix",
     "vscode-clangd": "https://open-vsx.org/api/llvm-vs-code-extensions/vscode-clangd/0.1.11/file/llvm-vs-code-extensions.vscode-clangd-0.1.11.vsix",
     "cdt-gdb-vscode": "https://open-vsx.org/api/eclipse-cdt/cdt-gdb-vscode/0.0.92/file/eclipse-cdt.cdt-gdb-vscode-0.0.92.vsix",

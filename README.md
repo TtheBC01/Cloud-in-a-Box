@@ -2,8 +2,8 @@
 
 # Cloud-in-a-Box
 
-This repo implements a docker stack that can act as your own personal, lightweight, micro-cloud setup. The 
-stack uses the open-source [Theia](https://theia-ide.org/) framework to build a browser-based IDE, similar 
+This template repository implements a docker stack that can act as your own personal, lightweight, micro-cloud setup. 
+The stack uses the open-source [Theia](https://theia-ide.org/) framework to build a browser-based IDE, similar 
 to VSCode, that is served from Docker container. An [authentication layer](https://github.com/greenpau/caddy-security) 
 is provided by Caddy and public hosting is handled by [Argo Tunnel](https://www.cloudflare.com/products/tunnel/).
 Additionally, the IDE and caddy processes are handled by [supervisord](http://supervisord.org/) for process control 

@@ -40,7 +40,7 @@ services:
         expose:
             - "9091"
         environment:
-            GLANCES_OPT: "--export prometheus --quiet"
+            GLANCES_OPT: "--export prometheus --config /glances/conf/glances.conf --quiet"
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock:ro"
             - "./glances/glances.conf:/glances/conf/glances.conf"

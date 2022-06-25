@@ -40,6 +40,7 @@ WORKDIR /.browser-ide
 
 # Build the IDE
 COPY package.json .
+COPY ./browser-ide/preloadTemplate.html preloadTemplate.html
 RUN yarn
 RUN yarn build
 
