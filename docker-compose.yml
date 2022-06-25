@@ -18,6 +18,9 @@ services:
             - AUTHP_ADMIN_USER=${AUTHP_ADMIN_USER}
             - AUTHP_ADMIN_SECRET=${AUTHP_ADMIN_SECRET}
             - AUTHP_ADMIN_EMAIL=${AUTHP_ADMIN_EMAIL}
+            - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+            - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
+            - JWT_SHARED_KEY=${JWT_SHARED_KEY}
             
     ipfs-node:
         restart: always
@@ -40,7 +43,9 @@ services:
         expose:
             - "9091"
         environment:
-            GLANCES_OPT: "--export prometheus --config /glances/conf/glances.conf --quiet"
+            GLANCES_OPT: "--export prometheus 
+
+            --quiet"
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock:ro"
             - "./glances/glances.conf:/glances/conf/glances.conf"
