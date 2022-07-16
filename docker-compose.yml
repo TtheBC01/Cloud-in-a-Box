@@ -46,7 +46,7 @@ services:
             GLANCES_OPT: "--export prometheus --quiet"
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock:ro"
-            - "./glances/glances.conf:/glances/conf/glances.conf"
+            - "./glances/glances.conf:/etc/glances.conf:ro"
         pid: "host"
         networks: 
             - proxy-network
@@ -109,7 +109,7 @@ services:
         container_name: grafana
         volumes:
             - grafana-storage:/var/lib/grafana
-            - "./grafana/grafana.ini:/etc/grafana/grafana.ini"
+            - "./grafana/grafana.ini:/etc/grafana/grafana.ini:ro"
             - "./grafana/cloud-in-a-box-grafana.yaml:/etc/grafana/provisioning/dashboards/cloud-in-a-box-grafana.yaml"
             - "./grafana/dashboards:/etc/grafana/dashboards"
             - "./grafana/prom-data-source.yaml:/etc/grafana/provisioning/datasources/prom-data-source.yaml"
