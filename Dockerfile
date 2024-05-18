@@ -5,7 +5,7 @@ RUN xcaddy build \
     --with github.com/greenpau/caddy-security \
     --with github.com/greenpau/caddy-trace
 
-FROM ubuntu:18.04
+FROM ubuntu
 
 # deadsnakes asks for your region, so we need to tell it to be non-interactive
 ENV DEBIAN_FRONTEND=noninteractive
@@ -30,7 +30,7 @@ RUN apt update -y \
                    python3.9 \ 
                    python3-pip \
                    python3.9-dev \
-    && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt install -y nodejs \
     && npm install --global yarn
 

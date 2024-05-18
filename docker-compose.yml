@@ -123,7 +123,7 @@ services:
     tunnel:
         restart: always
         container_name: argo-tunnel
-        image: 'cloudflare/cloudflared:2022.5.1'
+        image: 'cloudflare/cloudflared:2024.4.1'
         command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN}
         networks: 
             - proxy-network

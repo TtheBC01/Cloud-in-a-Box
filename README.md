@@ -34,6 +34,8 @@ To build the IDE environment, use the Docker cli:
 docker build -t browser-ide .
 ```
 
+If you want to use your locally built image in the stack, change line 11 in the [`docker-compose.yml`](/docker-compose.yml#L11) file.
+
 ## Pre-built Docker Image
 
 A pre-built version of the browser-ide can be pulled from Docker Hub:
@@ -48,9 +50,8 @@ Important environment variables are configured in the [`.env`](.env) file.
 
 ### Step 1: Username and Password
 
-You should set the `AUTHP_ADMIN_USER` and `AUTHP_ADMIN_SECRET` environment variables in the `.env` file to 
-appropriate values to properly setup the form-based login. I will eventually setup user registration so that 
-the pre-built docker image can be used in production without changing anything. 
+You should set the `AUTHP_ADMIN_USER` and `AUTHP_ADMIN_SECRET` environment variables in the [`.env`](/.env#L2) file to 
+appropriate values to properly setup the form-based login. 
 
 ### Step 2: Get an Argo Tunnel Token
 
@@ -59,7 +60,7 @@ IDE to the wider internet. This could be replaced with something like [NGrok](ht
 (non-authenticated) tunnels can be supported by tweaking the [Caddyfile](/browser-ide/Caddyfile) appropriately. 
 
 You must have a domain name managed by Cloudflare. Second, you must have Argo Tunnels enabled for 
-the domain's account. Use the [Zero Trust dashboard](https://dash.teams.cloudflare.com/) to configure a new 
+the domain's account. Use the [Zero Trust dashboard](https://one.dash.cloudflare.com/) to configure a new 
 tunnel and configure your desired subdomain and service address. 
 
 ![Alt Text](/tunnel-config.png)
